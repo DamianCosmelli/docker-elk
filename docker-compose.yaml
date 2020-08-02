@@ -1,5 +1,10 @@
 version: '3.5'
 
+networks:
+  default:
+    external:
+      name: FG_net
+
 services:
 
   elasticsearch:
@@ -15,7 +20,7 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-       static-network:
+      default:
         ipv4_address: ${IP_ELASTIC}
 
   logstash:
@@ -33,7 +38,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      static-network:
+      default:
         ipv4_address: ${IP_LOGSTASH}
     depends_on:
       - elasticsearch
@@ -52,9 +57,3 @@ services:
         ipv4_address: ${IP_KIBANA}
     depends_on:
       - elasticsearch
-
-networks:
-  static-network:
-    ipam:
-      config:
-        - subnet: ${IP_SUBNET}
