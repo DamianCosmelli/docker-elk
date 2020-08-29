@@ -2,8 +2,12 @@ version: '3.5'
 
 networks:
   default:
-    external:
-      name: FG_net
+    name: ekl_net
+    driver: bridge 
+    ipam:
+      config:
+        - subnet: 172.200.0.0/16
+
 
 services:
 
